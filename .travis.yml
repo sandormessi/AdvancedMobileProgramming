@@ -1,17 +1,5 @@
 language: android
-dist: trusty
 android:
   components:
     - build-tools-28.0.3
     - android-28
-
- env:
-   global:
-     - ADB_INSTALL_TIMEOUT=8
-
-       before_script:
-         - chmod +x gradlew
-
-       script:
-         - ./gradlew clean assembleDebug assembleRelease
-
