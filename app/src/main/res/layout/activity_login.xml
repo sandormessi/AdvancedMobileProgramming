@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hatter"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp"
+    />
+
+    <EditText
+       android:id="@+id/login_inputusern"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_logo"
+        android:background="@drawable/input1"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:hint="Felhasználó név"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp"
+        android:maxLines="1"
+
+        android:singleLine="true"
+
+
+        />
+
+    <EditText
+        android:id="@+id/login_inputpassw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_inputusern"
+
+
+
+
+        android:background="@drawable/input1"
+        android:padding="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:hint="Jelszó"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp"
+        android:maxLines="1"
+
+        android:singleLine="true"
+        android:inputType="textPassword"
+
+
+        />
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/login_inputpassw"
+        android:layout_marginTop="10dp"
+            >
+    <CheckBox
+        android:id="@+id/emlekezzram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Material.Drawable.CheckBox"
+        android:text="Emélkezz rám"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        app:cbd_strokeColor="@color/common_google_signin_btn_text_dark_default"
+        android:layout_marginLeft="20dp"
+
+        />
+
+         </LinearLayout>
+
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/gomb"
+        android:padding="20dp"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:text="Belépés"
+        android:textColor="@android:color/white"
+
+        android:focusedByDefault="true"
+
+        />
+
+    <TextView
+        android:id="@+id/admin_panel_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin belépés"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/login_button"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginEnd="20dp"
+    />
+
+    <TextView
+        android:id="@+id/notadmin_panel_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Felhasználó belépés"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/login_button"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="25dp"
+        android:visibility="invisible"
+
+        />
+
+</RelativeLayout>

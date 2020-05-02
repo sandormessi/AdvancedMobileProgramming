@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hatter"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/logo"
+        />
+
+    <TextView
+        android:id="@+id/app_szoveg"
+        android:layout_width="3000dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+
+        android:layout_marginTop="190dp"
+        android:text="Imádni való kisállatok gazdit keresnek!"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="27sp"
+        android:textStyle="bold|italic"
+
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+
+        />
+
+    <Button
+        android:id="@+id/fofekpernyo_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="177dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/gomb"
+        android:padding="20dp"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:text="Bejelentkezés"
+        android:textColor="@android:color/white"
+
+        />
+
+    <Button
+        android:id="@+id/fofekpernyo_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_above="@+id/fofekpernyo_login"
+        android:background="@drawable/input1"
+        android:padding="20dp"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:text="Regisztráció"
+        android:textColor="@android:color/white"
+
+        />
+
+</RelativeLayout>
