@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:scrollbars="horizontal|vertical" >
+    android:scrollbars="horizontal|vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/hatter"
-        tools:context=".LoginActivity" >
+        tools:context=".RegisterActivity" >
 
         <ImageView
             android:id="@+id/logo"
@@ -22,17 +21,17 @@
             android:src="@drawable/logo" />
 
         <EditText
-            android:id="@+id/login_inputusern"
+            android:id="@+id/register_inputname"
+            android:layout_below="@+id/logo"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/logo"
             android:background="@drawable/input1"
-            android:layout_marginTop="40dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:padding="10dp"
-            android:hint="Felhasználó név"
+            android:layout_marginTop="40dp"
+            android:hint="Családi és utónév"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textColorHint="@color/common_google_signin_btn_text_dark_default"
             android:textSize="20sp"
@@ -40,61 +39,55 @@
             android:singleLine="true" />
 
         <EditText
-            android:id="@+id/login_inputpassw"
+            android:id="@+id/register_inputpassw"
+            android:layout_below="@+id/register_inputname"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/login_inputusern"
             android:background="@drawable/input1"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
             android:padding="10dp"
+            android:layout_marginTop="20dp"
             android:hint="Jelszó"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textColorHint="@color/common_google_signin_btn_text_dark_default"
             android:textSize="20sp"
             android:maxLines="1"
-            android:singleLine="true"
-            android:inputType="textPassword" />
+            android:singleLine="true" />
 
-        <CheckBox
-            android:id="@+id/emlekezzram"
-            android:layout_below="@id/login_inputpassw"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            style="@style/Material.Drawable.CheckBox"
-            android:text="Emélkezz rám"
-            android:textSize="16sp"
-            app:cbd_strokeColor="@color/common_google_signin_btn_text_dark_default"
-            android:layout_marginLeft="20dp" />
-
-        <Button
-            android:id="@+id/login_button"
+        <EditText
+            android:id="@+id/register_inputusername"
+            android:layout_below="@+id/register_inputpassw"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/emlekezzram"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/gomb"
-            android:textAllCaps="false"
-            android:textSize="24sp"
-            android:text="Belépés"
-            android:textColor="@android:color/white"
-            android:focusedByDefault="true" />
+            android:background="@drawable/input1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:hint="Felhasználónév"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-        <TextView
-            android:id="@+id/admin_panel_link"
+        <Button
+            android:id="@+id/register_button"
+            android:layout_below="@id/register_inputusername"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Admin belépés"
-            android:layout_below="@+id/login_button"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="40dp"
+            android:background="@drawable/gomb"
+            android:padding="25dp"
+            android:textAllCaps="false"
+            android:textSize="24sp"
+            android:text="Regisztráció"
+            android:textColor="@android:color/white"
+            android:focusedByDefault="true" />
 
     </RelativeLayout>
 

@@ -1,116 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/hatter"
-    tools:context=".RegisterActivity">
+    android:fillViewport="true"
+    android:scrollbars="horizontal|vertical">
 
-    <ImageView
-        android:id="@+id/register_logo"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:src="@drawable/logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
-        />
-
-    <EditText
-        android:id="@+id/register_inputname"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/register_logo"
-        android:background="@drawable/input1"
-        android:padding="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:hint="Családi és utónév"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="20sp"
-        android:maxLines="1"
+        android:background="@drawable/hatter"
+        tools:context=".RegisterActivity" >
 
-        android:singleLine="true"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="150dp"
+            android:layout_height="165dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo" />
 
+        <EditText
+            android:id="@+id/register_inputname"
+            android:layout_below="@+id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:padding="10dp"
+            android:layout_marginTop="40dp"
+            android:hint="Családi és utónév"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-        />
+        <EditText
+            android:id="@+id/register_inputpassw"
+            android:layout_below="@+id/register_inputname"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:hint="Jelszó"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/register_inputpassw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/register_inputname"
+        <EditText
+            android:id="@+id/register_inputusername"
+            android:layout_below="@+id/register_inputpassw"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:hint="Felhasználónév"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:singleLine="true" />
 
+        <Button
+            android:id="@+id/register_button"
+            android:layout_below="@id/register_inputusername"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/gomb"
+            android:padding="25dp"
+            android:textAllCaps="false"
+            android:textSize="24sp"
+            android:text="Regisztráció"
+            android:textColor="@android:color/white" />
 
+    </RelativeLayout>
 
-
-        android:background="@drawable/input1"
-        android:padding="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:hint="Jelszó"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="20sp"
-        android:maxLines="1"
-
-        android:singleLine="true"
-
-
-
-        />
-
-    <EditText
-        android:id="@+id/register_inputusername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/register_inputpassw"
-
-
-
-
-        android:background="@drawable/input1"
-        android:padding="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:hint="Felhasználónév"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="20sp"
-        android:maxLines="1"
-
-        android:singleLine="true"
-
-
-
-
-        />
-
-
-
-
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/register_inputusername"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginRight="17dp"
-        android:background="@drawable/gomb"
-        android:padding="25dp"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        android:text="Regisztráció"
-        android:textColor="@android:color/white"
-
-        android:focusedByDefault="true"
-
-        />
-
-
-</RelativeLayout>
+</ScrollView>
