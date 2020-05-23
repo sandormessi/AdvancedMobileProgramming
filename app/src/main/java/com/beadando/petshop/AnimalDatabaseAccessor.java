@@ -1,6 +1,6 @@
 package com.beadando.petshop;
 
-import com.beadando.petshop.Model.Animal;
+import com.beadando.petshop.Model.Product;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
@@ -8,30 +8,30 @@ import java.util.List;
 
 public final class AnimalDatabaseAccessor
 {
-    private static List<Animal> products = new ArrayList<>();
+    private static List<Product> products = new ArrayList<>();
 
-    public static List<Animal> getAnimals()
+    public static List<Product> getAnimals()
     {
         return products;
     }
 
-    public static void getAnimalsWithProvider(final AnimalListProvider animalListProvider)
+    public static void getAnimalsWithProvider(final ProductListProvider animalListProvider, final boolean detachEventListenerAfterFirstOccurrence)
     {
-        DatabaseAccessor.getCollectionData(new DataCollectionProvider()
+        DatabaseAccessor.getCollectionDataAtPath(new DataCollectionProvider()
         {
             @Override
             public void ProvideCollection(Iterable<DataSnapshot> data)
             {
-                List<Animal> productList = AnimalDatabaseAccessor.products;
+                List<Product> productList = AnimalDatabaseAccessor.products;
                 productList.clear();
 
                 for (DataSnapshot dataSnapshot : data)
                 {
-                    productList.add(dataSnapshot.getValue(Animal.class));
+                    productList.add(dataSnapshot.getValue(Product.class));
                 }
 
-                animalListProvider.ProvideAnimalList(productList);
+                animalListProvider.ProvideProductList(productList);
             }
-        }, new String[] {"Animals"});
+        }, "/Animals", detachEventListenerAfterFirstOccurrence);
     }
 }

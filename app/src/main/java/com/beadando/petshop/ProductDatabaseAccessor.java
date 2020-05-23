@@ -1,6 +1,10 @@
 package com.beadando.petshop;
 
+import androidx.annotation.NonNull;
+
 import com.beadando.petshop.Model.Product;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
@@ -15,9 +19,9 @@ public final class ProductDatabaseAccessor
         return products;
     }
 
-    public static void getProductsWithProvider(final ProductListProvider productListProvider)
+    public static void getProductsWithProvider(final ProductListProvider productListProvider, final boolean detachEventListenerAfterFirstOccurrence)
     {
-        DatabaseAccessor.getCollectionData(new DataCollectionProvider()
+        DatabaseAccessor.getCollectionDataAtPath(new DataCollectionProvider()
         {
             @Override
             public void ProvideCollection(Iterable<DataSnapshot> data)
@@ -32,6 +36,18 @@ public final class ProductDatabaseAccessor
 
                 productListProvider.ProvideProductList(productList);
             }
-        }, new String[] {"Products"});
+        }, "/Products", detachEventListenerAfterFirstOccurrence);
+    }
+
+    public static void updateProduct(final Product product)
+    {
+        DatabaseAccessor.addOrUpdateDataWithListener(new OnCompleteListener()
+        {
+            @Override
+            public void onComplete(@NonNull Task task)
+            {
+                // Nothing to do here
+            }
+        }, product,"/Products/" + product.getId());
     }
 }
