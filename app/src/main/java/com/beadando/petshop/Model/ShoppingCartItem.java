@@ -7,6 +7,7 @@ public class ShoppingCartItem
     private String id;
     private int price;
     private int quantity;
+    private int ordered;
 
     public String getName()
     {
@@ -51,5 +52,14 @@ public class ShoppingCartItem
     public void setQuantity(int quantity)
     {
         this.quantity = quantity;
+    }
+
+    public int getOrdered()
+    {
+        return ordered;
+    }
+    public void setOrdered(int ordered)
+    {
+        this.ordered = ordered;
     }
 }

@@ -2,63 +2,74 @@ package com.beadando.petshop.Model;
 
 public class Product
 {
-    private String name;
-    private String image;
-    private String category;
-    private String price;
-    private String description;
-    private String id;
+    private String Name;
+    private String Image;
+    private String Category;
+    private int Price;
+    private String Description;
+    private String Id;
+    private int Stock;
 
     public String getName()
     {
-        return name;
+        return Name;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name)
+    {
+        Name = name;
     }
 
     public String getImage()
-
     {
-        return image;
+        return Image;
     }
     public void setImage(String image)
     {
-        this.image = image;
+        Image = image;
     }
 
     public String getCategory()
     {
-        return category;
+        return Category;
     }
     public void setCategory(String category)
     {
-        this.category = category;
+        Category = category;
     }
 
-    public String getPrice()
+    public int getPrice()
     {
-        return price;
+        return Price;
     }
-    public void setPrice(String price)
+    public void setPrice(int price)
     {
-        this.price = price;
+        Price = price;
     }
 
     public String getDescription()
     {
-        return description;
+        return Description;
     }
     public void setDescription(String description)
     {
-        this.description = description;
+        Description = description;
     }
 
-    public String getId() {
-        return id;
+    public String getId()
+    {
+        return Id;
     }
     public void setId(String id)
     {
-        this.id = id;
+        Id = id;
+    }
+
+    public int getStock()
+    {
+        return Stock;
+    }
+    public void setStock(int stock)
+    {
+        Stock = stock;
     }
 }

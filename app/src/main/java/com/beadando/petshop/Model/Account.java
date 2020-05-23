@@ -5,11 +5,20 @@ import java.util.List;
 
 public class Account
 {
-    private String name, password, username;
+    private String name, password, username, address;
     private List<ShoppingCartItem> cartItems = new ArrayList<>();
-    private boolean isAdmin;
+    private int admin;
 
     public Account() { }
+
+    public String getAddress()
+    {
+        return address;
+    }
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
 
     public String getName()
     {
@@ -43,12 +52,40 @@ public class Account
         return cartItems;
     }
 
-    public boolean isAdmin()
-{
-    return isAdmin;
-}
-    public void setAdmin(boolean admin)
+    public List<ShoppingCartItem> getNotOrderedCartItems()
     {
-        isAdmin = admin;
+        ArrayList<ShoppingCartItem> notOrdered = new ArrayList<>();
+        for (ShoppingCartItem item : cartItems)
+        {
+            if (item.getOrdered() == 0)
+            {
+                notOrdered.add(item);
+            }
+        }
+
+        return notOrdered;
+    }
+
+    public List<ShoppingCartItem> getOrderedCartItems()
+    {
+        ArrayList<ShoppingCartItem> notOrdered = new ArrayList<>();
+        for (ShoppingCartItem item : cartItems)
+        {
+            if (item.getOrdered() != 0)
+            {
+                notOrdered.add(item);
+            }
+        }
+
+        return notOrdered;
+    }
+
+    public int getAdmin()
+    {
+        return admin;
+    }
+    public void setAdmin(int admin)
+    {
+        this.admin = admin;
     }
 }
