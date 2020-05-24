@@ -8,6 +8,16 @@ public class ShoppingCartItem
     private int price;
     private int quantity;
     private int ordered;
+    private int isAnimal;
+
+    public int getIsAnimal()
+    {
+        return isAnimal;
+    }
+    public void setIsAnimal(int isAnimal)
+    {
+        this.isAnimal = isAnimal;
+    }
 
     public String getName()
     {

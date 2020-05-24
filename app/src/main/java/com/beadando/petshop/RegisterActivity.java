@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.beadando.petshop.Model.Account;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -22,13 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity {
-
-    private Button RegisterButton;
-    private EditText InputName, InputPW, InputUserName;
+public class RegisterActivity extends AppCompatActivity
+{
+    private EditText InputName, InputPW, InputUserName, AddressInput;
     private ProgressDialog loadingBar;
-
+    private final DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,20 +36,22 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        RegisterButton = (Button) findViewById(R.id.register_button);
-        InputName = (EditText) findViewById(R.id.register_inputname);
-        InputPW = (EditText) findViewById(R.id.register_inputpassw);
-        InputUserName = (EditText) findViewById(R.id.register_inputusername);
+        Button registerButton = findViewById(R.id.register_button);
+        InputName = findViewById(R.id.register_inputname);
+        InputPW = findViewById(R.id.register_inputpassw);
+        InputUserName = findViewById(R.id.register_inputusername);
+        AddressInput = findViewById(R.id.register_address);
 
         loadingBar = new ProgressDialog(this);
 
-        RegisterButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 CreateAccount();
             }
         });
-
     }
 
     private void CreateAccount()
@@ -57,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         String Name = InputName.getText().toString();
         String Passw = InputPW.getText().toString();
         String Username = InputUserName.getText().toString();
+        String address = AddressInput.getText().toString();
 
         if (TextUtils.isEmpty(Name))
         {
@@ -70,57 +73,57 @@ public class RegisterActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "Felhasználónevet kötelező megadni!", Toast.LENGTH_SHORT).show();
         }
+        else if (TextUtils.isEmpty(address))
+        {
+            Toast.makeText(this, "Címet kötelező megadni!", Toast.LENGTH_SHORT).show();
+        }
         else
         {
             loadingBar.setTitle("Fiók készítése");
-            loadingBar.setMessage("Adatok ellenőrzése");
+            loadingBar.setMessage("Adatok ellenőrzése...");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            ValidateEmail(Name, Passw, Username);
+            ValidateEmail(Name, Passw, Username, address);
         }
     }
 
-    private void ValidateEmail(final String name, final String passw, final String username)
+    private void ValidateEmail(final String name, final String passw, final String username, final String address)
     {
-
-        final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance().getReference();
-
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener()
+        AccountDatabaseAccessor.getUserWithName(new AccountProvider()
         {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            public void ProvideAccount(Account account)
             {
-                if (!(dataSnapshot.child("Users").child(username).exists()))
+                if (account == null)
                 {
                     HashMap<String, Object> userdataMap = new HashMap<>();
+
+                    userdataMap.put("address", address);
                     userdataMap.put("username", username);
                     userdataMap.put("name", name);
                     userdataMap.put("password", passw);
 
-                    RootRef.child("Users").child(username).updateChildren(userdataMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>()
+                    AccountDatabaseAccessor.addOrUpdateUserDataWithListener(new OnCompleteListener()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task task)
+                        {
+                            if(task.isSuccessful())
                             {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task)
-                                {
-                                    if (task.isSuccessful())
-                                    {
-                                        Toast.makeText(RegisterActivity.this, "A felhasználói fiók elkészült!", Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
+                                Toast.makeText(RegisterActivity.this, "A felhasználói fiók elkészült!", Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
 
-                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                        startActivity(intent);
-                                    }
-                                    else
-                                    {
-                                        loadingBar.dismiss();
-                                        Toast.makeText(RegisterActivity.this, "Nem sikerült kapcsolódni a szerverhez, próbáld újra később!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                loadingBar.dismiss();
+                                Toast.makeText(RegisterActivity.this, "Nem sikerült kapcsolódni a szerverhez, próbáld újra később!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, username, userdataMap);
                 }
                 else
                 {
@@ -132,14 +135,6 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError)
-            {
-
-            }
-        });
-
+        }, username);
     }
-
 }

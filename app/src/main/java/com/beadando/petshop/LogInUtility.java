@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.beadando.petshop.Model.Account;
 import com.beadando.petshop.Prevalent.Prevalent;
-import com.beadando.petshop.main.HomeActivity;
-
-import java.util.List;
 
 import io.paperdb.Paper;
 
@@ -38,60 +35,44 @@ public final class LogInUtility
             Paper.book().write(Prevalent.UserPasswordKey, password);
         }
 
-        AccountDatabaseAccessor.getUsersWithProvider(new AccountListProvider()
+        AccountDatabaseAccessor.getUserWithName(new AccountProvider()
         {
             @Override
-            public void ProvideAccountList(List<Account> accounts)
+            public void ProvideAccount(Account account)
             {
-                boolean accountFound = false;
-                for (int i = 0; i < accounts.size(); i++)
+                boolean successfulAuthentication = false;
+                if (account != null)
                 {
-                    Account account = accounts.get(i);
-                    if (account.getName().equals(username) )
+                    if (account.getPassword().equals(password))
                     {
-                        accountFound = true;
-                        if (account.getPassword().equals(password))
+                        successfulAuthentication = true;
+                        Prevalent.CurrentOnlineAccount = account;
+
+                        if (account.getAdmin() != 0)
                         {
-                            Prevalent.CurrentOnlineAccount = account;
+                            Toast.makeText(context, "Sikeres rendszergazda bejelentkezés!", Toast.LENGTH_SHORT).show();
+                            loadingBar.dismiss();
 
-                            if (account.getAdmin() != 0)
-                            {
-                                Toast.makeText(context, "Sikeres rendszergazda bejelentkezés!", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
-
-                                Intent intent = new Intent(context, AdminCategoryActivity.class);
-                                context.startActivity(intent);
-                            }
-                            else
-                            {
-                                Toast.makeText(context, "Sikeres bejelentkezés!", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
-
-                                Intent intent = new Intent(context, HomeActivity.class);
-                                context.startActivity(intent);
-                            }
+                            Intent intent = new Intent(context, AdminCategoryActivity.class);
+                            context.startActivity(intent);
                         }
                         else
                         {
-                            Toast.makeText(context, "Rossz felhasználónév vagy jelszó!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Sikeres bejelentkezés!", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
-                        }
 
-                        break;
-                    }
-                    else
-                    {
-                        Toast.makeText(context, "Rossz felhasználónév vagy jelszó!", Toast.LENGTH_SHORT).show();
-                        loadingBar.dismiss();
+                            Intent intent = new Intent(context, HomeActivity.class);
+                            context.startActivity(intent);
+                        }
                     }
                 }
 
-                if (!accountFound)
+                if (!successfulAuthentication)
                 {
-                    Toast.makeText(context, username + " felhasználó nem létezik!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Rossz felhasználónév vagy jelszó, vagy '" +username + "' felhasználó nem létezik!", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }
-        });
+        }, username);
     }
 }

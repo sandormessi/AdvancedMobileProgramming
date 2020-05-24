@@ -1,4 +1,4 @@
-package com.beadando.petshop.main;
+package com.beadando.petshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,13 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.beadando.petshop.LoginActivity;
-import com.beadando.petshop.MainActivity;
-import com.beadando.petshop.Model.Animal;
-import com.beadando.petshop.Animal.AnimalListActivity;
-import com.beadando.petshop.R;
+import com.beadando.petshop.Product.ProductListActivity;
 
-import com.beadando.petshop.ShoppingCartActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,12 +22,6 @@ public class HomeActivity extends AppCompatActivity
     private FloatingActionButton shoppingCartButton;
 
     private final DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
-
-    private void OpenCategory(Animal animal)
-    {
-        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,6 +45,7 @@ public class HomeActivity extends AppCompatActivity
         });
 
         animalCategoryButton = findViewById(R.id.animals_category_button);
+        productCategoryButton = findViewById(R.id.products_category_button);
 
         animalCategoryButton.setOnClickListener(new View.OnClickListener()
         {
@@ -64,22 +54,24 @@ public class HomeActivity extends AppCompatActivity
             {
                 Paper.book().destroy();
 
-                Intent intent = new Intent(HomeActivity.this, AnimalListActivity.class);
+                Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
+                intent.putExtra(GlobalConstants.IsAnimalListArgument, true);
+
                 startActivity(intent);
             }
         });
-
-        productCategoryButton = findViewById(R.id.products_category_button);
 
         productCategoryButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //Paper.book().destroy();
+                Paper.book().destroy();
 
-                //Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
+                intent.putExtra(GlobalConstants.IsAnimalListArgument, false);
+
+                startActivity(intent);
             }
         });
 
