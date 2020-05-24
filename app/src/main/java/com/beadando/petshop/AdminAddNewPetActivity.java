@@ -54,11 +54,11 @@ public class AdminAddNewPetActivity extends AppCompatActivity
         ProductImageRef = FirebaseStorage.getInstance().getReference().child("Product Images");
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
-        AddNewProductButton = (Button) findViewById(R.id.add_new_product);
-        InputProductImage = (ImageView) findViewById(R.id.select_product_image);
-        InputProductName = (EditText) findViewById(R.id.product_name);
-        InputProductDescription = (EditText) findViewById(R.id.product_description);
-        InputProductPrice = (EditText) findViewById(R.id.product_price);
+        AddNewProductButton = findViewById(R.id.add_new_product);
+        InputProductImage = findViewById(R.id.select_product_image);
+        InputProductName = findViewById(R.id.product_name_textview);
+        InputProductDescription = findViewById(R.id.product_description);
+        InputProductPrice = findViewById(R.id.product_price);
         loadingBar = new ProgressDialog(this);
 
         InputProductImage.setOnClickListener(new View.OnClickListener() {
@@ -73,14 +73,10 @@ public class AdminAddNewPetActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-             ValidateProductData();
+                ValidateProductData();
             }
         });
-
-
     }
-
-
 
     private void OpenGallery()
     {
@@ -88,7 +84,6 @@ public class AdminAddNewPetActivity extends AppCompatActivity
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, GalleryPick);
-
     }
 
     @Override
@@ -96,11 +91,10 @@ public class AdminAddNewPetActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==GalleryPick && resultCode==RESULT_OK && data!=null)
+        if(requestCode == GalleryPick && resultCode == RESULT_OK && data!=null)
         {
             ImageUri = data.getData();
             InputProductImage.setImageURI(ImageUri);
-
         }
     }
 
@@ -148,12 +142,12 @@ public class AdminAddNewPetActivity extends AppCompatActivity
 
         productRandomKey = saveCurrentDate + saveCurrentTime;
 
-
         final StorageReference filePath = ProductImageRef.child(ImageUri.getLastPathSegment() + productRandomKey + ".jpg");
 
         final UploadTask uploadTask = filePath.putFile(ImageUri);
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+        uploadTask.addOnFailureListener(new OnFailureListener()
+        {
             @Override
             public void onFailure(@NonNull Exception e)
             {
@@ -161,13 +155,15 @@ public class AdminAddNewPetActivity extends AppCompatActivity
                 Toast.makeText(AdminAddNewPetActivity.this, "Hiba történt: " + message, Toast.LENGTH_SHORT).show();
                 loadingBar.dismiss();
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+        {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
             {
                 Toast.makeText(AdminAddNewPetActivity.this, "Sikeres képfeltöltés!", Toast.LENGTH_SHORT).show();
 
-                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
+                {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
                     {
@@ -181,7 +177,8 @@ public class AdminAddNewPetActivity extends AppCompatActivity
                         return filePath.getDownloadUrl();
 
                     }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                }).addOnCompleteListener(new OnCompleteListener<Uri>()
+                {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task)
                     {
@@ -195,9 +192,6 @@ public class AdminAddNewPetActivity extends AppCompatActivity
                 });
             }
         });
-
-
-
     }
 
     private void SaveProductInfoToDatabase()
@@ -213,7 +207,8 @@ public class AdminAddNewPetActivity extends AppCompatActivity
         productMap.put("pname", Pname);
 
         ProductsRef.child(productRandomKey).updateChildren(productMap)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                .addOnCompleteListener(new OnCompleteListener<Void>()
+                {
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
                     {
@@ -234,7 +229,5 @@ public class AdminAddNewPetActivity extends AppCompatActivity
                         }
                     }
                 });
-
-
     }
 }

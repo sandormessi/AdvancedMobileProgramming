@@ -12,18 +12,14 @@ public class AdminCategoryActivity extends AppCompatActivity
     private ImageView Dogs;
     private ImageView Cats;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_category);
 
-        Dogs = (ImageView) findViewById(R.id.dogs);
-        Cats = (ImageView) findViewById(R.id.cats);
-
-
+        Dogs = findViewById(R.id.dogs);
+        Cats = findViewById(R.id.cats);
 
         Dogs.setOnClickListener(new View.OnClickListener()
         {

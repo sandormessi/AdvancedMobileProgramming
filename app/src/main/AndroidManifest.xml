@@ -9,13 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminCategoryActivity"></activity>
+        <activity
+            android:name=".ShoppingCartActivity"
+            android:label="@string/title_activity_shopping_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Product.ProductListActivity"
+            android:label="@string/title_product_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Product.ProductDetailActivity"
+            android:label="@string/title_product_detail"
+            android:parentActivityName=".Product.ProductListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.beadando.petshop.Product.ProductListActivity" />
+        </activity>
+        <activity android:name=".AdminCategoryActivity" />
         <activity android:name=".AdminAddNewPetActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".RegistActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="Valami" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
