@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Animal.AnimalListActivity"
+    tools:context=".Product.ProductListActivity"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -13,15 +13,16 @@
         android:layout_height="wrap_content" >
 
         <TextView
+            android:id="@+id/header_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Örökbefogadható állatok"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <include layout="@layout/shopping_cart"
             android:id="@+id/shopping_cart_button"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" />
 

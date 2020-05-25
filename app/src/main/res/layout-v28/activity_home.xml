@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/hatter"
     android:descendantFocusability="blocksDescendants"
-    tools:context=".main.HomeActivity" >
+    tools:context=".HomeActivity" >
 
     <Button
         android:id="@+id/Logout_button"
