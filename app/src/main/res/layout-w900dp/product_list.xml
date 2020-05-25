@@ -10,7 +10,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context=".Animal.AnimalListActivity" >
+    tools:context=".Product.ProductListActivity" >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/product_list"
@@ -20,8 +20,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.beadando.petshop.Animal.AnimalListActivity"
-        tools:listitem="@layout/product_list_content" />
+        tools:context="com.beadando.petshop.Product.ProductListActivity" />
 
     <FrameLayout
         android:id="@+id/product_detail_container"

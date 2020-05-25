@@ -7,7 +7,6 @@ import com.beadando.petshop.Model.ShoppingCartItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,5 +128,18 @@ public final class AccountDatabaseAccessor
 
             }
         }, item, path);
+    }
+
+    public static void removeShoppingCartItems(Account account, ShoppingCartItem item)
+    {
+        final String path = "/Users/" + account.getUsername() + "/Orders/" + item.getId();
+        DatabaseAccessor.addOrUpdateDataWithListener(new OnCompleteListener()
+        {
+            @Override
+            public void onComplete(@NonNull Task task)
+            {
+
+            }
+        }, null, path);
     }
 }

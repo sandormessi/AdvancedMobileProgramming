@@ -39,8 +39,26 @@
             android:singleLine="true" />
 
         <EditText
-            android:id="@+id/register_inputpassw"
+            android:id="@+id/register_address"
             android:layout_below="@+id/register_inputname"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:hint="Cím"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/register_inputpassw"
+            android:layout_below="@+id/register_address"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

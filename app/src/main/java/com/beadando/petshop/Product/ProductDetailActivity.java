@@ -1,18 +1,18 @@
-package com.beadando.petshop.Animal;
+package com.beadando.petshop.Product;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.beadando.petshop.GlobalConstants;
 import com.beadando.petshop.R;
 
 import androidx.appcompat.widget.Toolbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 
 import android.view.MenuItem;
 
-public class AnimalDetailActivity extends AppCompatActivity
+public class ProductDetailActivity extends AppCompatActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,10 +32,12 @@ public class AnimalDetailActivity extends AppCompatActivity
         if (savedInstanceState == null)
         {
             Bundle arguments = new Bundle();
-            arguments.putString(AnimalDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(AnimalDetailFragment.ARG_ITEM_ID));
-            AnimalDetailFragment fragment = new AnimalDetailFragment();
+            arguments.putString(ProductDetailFragment.ARG_ITEM_ID, getIntent().getStringExtra(ProductDetailFragment.ARG_ITEM_ID));
+            arguments.putBoolean(GlobalConstants.IsAnimalListArgument, getIntent().getBooleanExtra(GlobalConstants.IsAnimalListArgument,false));
+
+            ProductDetailFragment fragment = new ProductDetailFragment();
             fragment.setArguments(arguments);
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.product_detail_container, fragment)
                     .commit();
@@ -48,7 +50,7 @@ public class AnimalDetailActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            navigateUpTo(new Intent(this, AnimalListActivity.class));
+            navigateUpTo(new Intent(this, ProductListActivity.class));
 
             return true;
         }
