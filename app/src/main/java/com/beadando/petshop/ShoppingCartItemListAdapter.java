@@ -5,18 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.beadando.petshop.Model.Product;
 import com.beadando.petshop.Model.ShoppingCartItem;
 
 import java.util.List;
 
 public class ShoppingCartItemListAdapter extends ArrayAdapter<ShoppingCartItem>
 {
-    List<ShoppingCartItem> cartItems;
+    private final List<ShoppingCartItem> cartItems;
     public ShoppingCartItemListAdapter(@NonNull Context context, List<ShoppingCartItem> cartItems)
     {
         super(context, 0, cartItems);
@@ -24,31 +26,197 @@ public class ShoppingCartItemListAdapter extends ArrayAdapter<ShoppingCartItem>
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent)
+    public View getView(final int position, View view, ViewGroup parent)
     {
-        // Get the data item for this position
-        ShoppingCartItem account = cartItems.get(position);
+        final ShoppingCartItem cartItem = cartItems.get(position);
 
-        // Check if an existing view is being reused, otherwise inflate the view
         if (view == null)
         {
             view = LayoutInflater.from(getContext()).inflate(R.layout.shopping_cart_item_details, parent, false);
         }
 
-        // Lookup view for data population
-        TextView id = view.findViewById(R.id.id_text);
-        TextView name = view.findViewById(R.id.product_name);
-        TextView description = view.findViewById(R.id.product_description);
-        TextView price = view.findViewById(R.id.product_price);
-        EditText quantity = view.findViewById(R.id.quantity);
+        final TextView id = view.findViewById(R.id.id_cartitem_text);
+        final TextView name = view.findViewById(R.id.product_name_textview);
+        final TextView price = view.findViewById(R.id.product_price);
+        final TextView stock = view.findViewById(R.id.product_stock);
 
-        id.setText(account.getId());
-        name.setText(account.getName());
-        description.setText(account.getDescription());
-        price.setText(String.valueOf(account.getPrice()));
-        quantity.setText(String.valueOf(account.getQuantity()));
+        final LinearLayout quantityContainer = view.findViewById(R.id.quantity_container);
+        final TextView quantityTextView = quantityContainer.findViewById(R.id.quantity);
+        final Button increaseQuantity = quantityContainer.findViewById(R.id.increase_quantity);
+        final Button decreaseQuantity = quantityContainer.findViewById(R.id.decrease_quantity);
+        final Button removeItem = view.findViewById(R.id.remove_item);
 
-        // Return the completed view to render on screen
+        id.setText(cartItem.getId());
+        name.setText(cartItem.getName());
+        price.setText(String.valueOf(cartItem.getPrice()));
+        quantityTextView.setText(String.valueOf(cartItem.getQuantity()));
+
+        increaseQuantity.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                OrderItem(cartItem, quantityTextView, stock);
+                notifyDataSetChanged();
+            }
+        });
+
+        decreaseQuantity.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                UnOrderItem(cartItem, quantityTextView, stock);
+                notifyDataSetChanged();
+            }
+        });
+
+        removeItem.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                RemoveOrderItem(cartItem, stock);
+                cartItems.remove(position);
+
+            }
+        });
+
+        SetStock(stock, cartItem);
+
         return view;
+    }
+
+    private void SetStock(final TextView quantityTextView, final ShoppingCartItem cartItem)
+    {
+        if (cartItem.getIsAnimal() == 0)
+        {
+            ProductDatabaseAccessor.getProductsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products)
+                {
+                    Product product = getProductById(cartItem.getId(), products);
+                    quantityTextView.setText("Készlet: " + product.getStock());
+                }
+            }, true);
+        }
+        else
+        {
+            AnimalDatabaseAccessor.getAnimalsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products)
+                {
+                    Product product = getProductById(cartItem.getId(), products);
+                    quantityTextView.setText("Készlet: " + product.getStock());
+                }
+            }, true);
+        }
+    }
+
+    private void OrderItem(final ShoppingCartItem cartItem, final TextView textView, final TextView stock)
+    {
+        if (cartItem.getIsAnimal() == 0)
+        {
+            ProductDatabaseAccessor.getProductsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products)
+                {
+                    Product product = getProductById(cartItem.getId(), products);
+                    ItemOrderUtility.OrderItems(getContext(), product, stock, 1, cartItem.getIsAnimal() != 0, true);
+                    notifyDataSetChanged();
+                    //textView.setText(String.valueOf(cartItem.getQuantity()));
+                }
+            }, true);
+        }
+        else
+        {
+            AnimalDatabaseAccessor.getAnimalsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products)
+                {
+                    Product product = getProductById(cartItem.getId(), products);
+                    ItemOrderUtility.OrderItems(getContext(), product, stock, 1, cartItem.getIsAnimal() != 0, true);
+                    notifyDataSetChanged();
+                    //textView.setText(String.valueOf(cartItem.getQuantity()));
+                }
+            }, true);
+        }
+    }
+
+    private void UnOrderItem(final ShoppingCartItem cartItem, final TextView textView, final TextView stock)
+    {
+        if (cartItem.getIsAnimal() == 0)
+        {
+            ProductDatabaseAccessor.getProductsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products) {
+                    Product product = getProductById(cartItem.getId(), products);
+                    ItemOrderUtility.UnOrderItems(product, stock, 1, cartItem.getIsAnimal() != 0, true);
+                    notifyDataSetChanged();
+                    //textView.setText(String.valueOf(cartItem.getQuantity()));
+                }
+            }, true);
+        }
+        else
+        {
+            AnimalDatabaseAccessor.getAnimalsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products) {
+                    Product product = getProductById(cartItem.getId(), products);
+                    ItemOrderUtility.UnOrderItems(product, stock, 1, cartItem.getIsAnimal() != 0, true);
+                    notifyDataSetChanged();
+                    //textView.setText(String.valueOf(cartItem.getQuantity()));
+                }
+            }, true);
+        }
+    }
+
+    private void RemoveOrderItem(final ShoppingCartItem cartItem, final TextView stock)
+    {
+        if (cartItem.getIsAnimal() == 0)
+        {
+            ProductDatabaseAccessor.getProductsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products)
+                {
+                    Product product = getProductById(cartItem.getId(), products);
+                    ItemOrderUtility.RemoveOrderedItem(product, stock,cartItem.getIsAnimal() != 0, true);
+                    notifyDataSetChanged();
+                }
+            }, true);
+        }
+        else
+        {
+            AnimalDatabaseAccessor.getAnimalsWithProvider(new ProductListProvider()
+            {
+                @Override
+                public void ProvideProductList(List<Product> products)
+                {
+                    Product product = getProductById(cartItem.getId(), products);
+                    ItemOrderUtility.RemoveOrderedItem(product, stock,cartItem.getIsAnimal() != 0, true);
+                    notifyDataSetChanged();
+                }
+            }, true);
+        }
+    }
+
+    private static Product getProductById(String id, List<Product> products)
+    {
+        for (Product product : products)
+        {
+            if (product.getId().equals(id))
+            {
+                return product;
+            }
+        }
+
+        return null;
     }
 }
