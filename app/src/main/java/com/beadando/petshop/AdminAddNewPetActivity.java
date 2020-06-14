@@ -32,7 +32,7 @@ import java.util.HashMap;
 
 public class AdminAddNewPetActivity extends AppCompatActivity
 {
-    private String CategoryName, Description, Price, Pname, saveCurrentDate, saveCurrentTime;
+    private String CategoryName, Description, Price, Pname, saveCurrentDate, saveCurrentTime, ImageFilename;
     private Button AddNewProductButton;
     private EditText InputProductName, InputProductDescription, InputProductPrice;
     private ImageView InputProductImage;
@@ -44,6 +44,7 @@ public class AdminAddNewPetActivity extends AppCompatActivity
     private ProgressDialog loadingBar;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,7 +53,7 @@ public class AdminAddNewPetActivity extends AppCompatActivity
 
         CategoryName = getIntent().getExtras().get("category").toString();
         ProductImageRef = FirebaseStorage.getInstance().getReference().child("Product Images");
-        ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        ProductsRef = FirebaseDatabase.getInstance().getReference().child("Animals");
 
         AddNewProductButton = findViewById(R.id.add_new_product);
         InputProductImage = findViewById(R.id.select_product_image);
@@ -142,7 +143,9 @@ public class AdminAddNewPetActivity extends AppCompatActivity
 
         productRandomKey = saveCurrentDate + saveCurrentTime;
 
-        final StorageReference filePath = ProductImageRef.child(ImageUri.getLastPathSegment() + productRandomKey + ".jpg");
+        ImageFilename = ImageUri.getLastPathSegment() + productRandomKey + ".jpg";
+
+        final StorageReference filePath = ProductImageRef.child(ImageFilename);
 
         final UploadTask uploadTask = filePath.putFile(ImageUri);
 
@@ -197,16 +200,17 @@ public class AdminAddNewPetActivity extends AppCompatActivity
     private void SaveProductInfoToDatabase()
     {
         HashMap<String, Object> productMap = new HashMap<>();
-        productMap.put("pid", productRandomKey);
-        productMap.put("date", saveCurrentDate);
-        productMap.put("time", saveCurrentTime);
+        productMap.put("id", Pname);
+       // productMap.put("date", saveCurrentDate);
+       // productMap.put("time", saveCurrentTime);
         productMap.put("description", Description);
-        productMap.put("image", downloadImageURL);
+        productMap.put("image", ImageFilename);
         productMap.put("category", CategoryName);
-        productMap.put("price", Price);
-        productMap.put("pname", Pname);
+        productMap.put("price", Integer.valueOf(Price));
+        productMap.put("name", Pname);
+        productMap.put("stock", 10);
 
-        ProductsRef.child(productRandomKey).updateChildren(productMap)
+        ProductsRef.child(Pname).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>()
                 {
                     @Override
